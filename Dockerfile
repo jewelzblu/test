@@ -19,16 +19,14 @@ ARG AUUID="34eaf305-b49e-4d43-bea4-23980e7a5a30"
 ARG HTML="https://github.com/AYJCSGM/mikutap/archive/refs/heads/master.zip"
 #ARG CADDY="https://github.com/caddyserver/caddy/releases/download/v2.6.2/caddy_2.6.2_linux_amd64.tar.gz"
 ARG ParameterSSENCYPT="chacha20-ietf-poly1305"
-
-COPY ./etc/ /tmp/config
-COPY ./entrypoint.sh /entrypoint.sh
+ARG CONFIGCADDY="https://raw.githubusercontent.com/jewelzblu/test/main/etc/Caddyfile"
+ARG CONFIGXRAY="https://raw.githubusercontent.com/jewelzblu/test/main/etc/xray.json"
 
 RUN apk update && \
     apk add --no-cache ca-certificates tor unzip wget && \
     mkdir -p /opt/caddy/xray-core && \
-    cat /tmp/config/config.json | sed -e "s/\$AUUID/$AUUID/g" -e "s/\$ParameterSSENCYPT/$ParameterSSENCYPT/g" > /opt/caddy/xray-core/config.json && \
-    mv /tmp/config/Caddyfile /opt/caddy/Caddyfile && \
-    cat /tmp/config/Caddyfile | sed -e "1c :$PORT" -e "s/\$AUUID/$AUUID/g" -e "s/\$MYUUID-HASH/$(caddy hash-password --plaintext $AUUID)/g" > /opt/caddy/Caddyfile && \
+    wget -qO- $CONFIGXRAY | sed -e "s/\$AUUID/$AUUID/g" -e "s/\$ParameterSSENCYPT/$ParameterSSENCYPT/g" > /opt/caddy/xray-core/config.json && \
+    wget -qO- $CONFIGCADDY | sed -e "1c :$PORT" -e "s/\$AUUID/$AUUID/g" -e "s/\$MYUUID-HASH/$(caddy hash-password --plaintext $AUUID)/g" > /opt/caddy/Caddyfile && \
     wget -O /tmp/mikutap-master.zip $HTML && \
     unzip /tmp/mikutap-master.zip -d /opt/caddy/ && \
     rm -rf /tmp/* && \
