@@ -29,8 +29,10 @@ RUN apk update && \
     wget -qO- $CONFIGCADDY | sed -e "1c :$PORT" -e "s/\$AUUID/$AUUID/g" -e "s/\$MYUUID-HASH/$(caddy hash-password --plaintext $AUUID)/g" > /opt/caddy/Caddyfile && \
     wget -O /tmp/mikutap-master.zip $HTML && \
     unzip /tmp/mikutap-master.zip -d /opt/caddy/ && \
-    rm -rf /tmp/* && \
-    chmod +x /entrypoint.sh
+    rm -rf /tmp/* 
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 COPY --from=xray /tmp/xray /opt/caddy/xray-core/
 RUN chmod +x /opt/caddy/xray-core/xray
