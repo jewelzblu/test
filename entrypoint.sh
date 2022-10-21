@@ -1,6 +1,6 @@
 #!/bin/sh
 
-AUUID="36c9cb20-c239-4a70-8273-5da229049f62"
+AUUID="34eaf305-b49e-4d43-bea4-23980e7a5a30"
 CADDYIndexPage="https://raw.githubusercontent.com/caddyserver/dist/master/welcome/index.html"
 CONFIGCADDY="https://raw.githubusercontent.com/jssame/cxdxy/main/etc/Caddyfile"
 CONFIGXRAY="https://raw.githubusercontent.com/jssame/cxdxy/main/etc/xray.json"
