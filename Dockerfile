@@ -18,6 +18,7 @@ ARG AUUID="34eaf305-b49e-4d43-bea4-23980e7a5a30"
 #ARG XRAY="https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip"
 ARG HTML="https://github.com/AYJCSGM/mikutap/archive/refs/heads/master.zip"
 #ARG CADDY="https://github.com/caddyserver/caddy/releases/download/v2.6.2/caddy_2.6.2_linux_amd64.tar.gz"
+ARG ParameterSSENCYPT="chacha20-ietf-poly1305"
 
 COPY ./etc/ /tmp/config
 COPY ./entrypoint.sh /entrypoint.sh
